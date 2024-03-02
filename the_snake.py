@@ -168,6 +168,7 @@ class Snake(GameObject):
 
 
 def main():
+    """Главная функция."""
     apple = Apple()
     apple.draw(screen)
     snake = Snake()
