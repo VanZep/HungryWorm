@@ -56,7 +56,7 @@ class GameObject:
         self.body_color = body_color
 
     def draw(self):
-        pass
+        """Метод отрисовки объекта."""
 
 
 class Apple(GameObject):
@@ -88,7 +88,7 @@ class Apple(GameObject):
 class Snake(GameObject):
     """Класс, описывающий змейку."""
 
-    def __init__(self, position=None, body_color=None, length=None, positions=None, next_direction=None, direction=None):
+    def __init__(self, position=None, body_color=None):
         body_color = SNAKE_COLOR
         position = self.get_head_position
         self.length = START_LENGTH_SNAKE
@@ -137,23 +137,28 @@ class Snake(GameObject):
         """Метод перемещения змейки."""
         self.positions.insert(
             0,
-            (self.positions[0][0] + self.direction[0] * GRID_SIZE,
-            self.positions[0][1] + self.direction[1] * GRID_SIZE)
+            (
+                self.positions[0][0] + self.direction[0] * GRID_SIZE,
+                self.positions[0][1] + self.direction[1] * GRID_SIZE
+            )
         )
-
         for i in range(len(self.positions)):
             if self.positions[i][0] == SCREEN_WIDTH:
                 self.positions.insert(i, (0, self.positions[i][1]))
-                self.positions.pop(i+1)
+                self.positions.pop(i + 1)
             elif self.positions[i][0] == -GRID_SIZE:
-                self.positions.insert(i, (SCREEN_WIDTH - GRID_SIZE, self.positions[i][1]))
-                self.positions.pop(i+1)
+                self.positions.insert(
+                    i, (SCREEN_WIDTH - GRID_SIZE, self.positions[i][1])
+                )
+                self.positions.pop(i + 1)
             elif self.positions[i][1] == SCREEN_HEIGHT:
                 self.positions.insert(i, (self.positions[i][0], 0))
-                self.positions.pop(i+1)
+                self.positions.pop(i + 1)
             elif self.positions[i][1] == -GRID_SIZE:
-                self.positions.insert(i, (self.positions[i][0], SCREEN_HEIGHT - GRID_SIZE))
-                self.positions.pop(i+1)
+                self.positions.insert(
+                    i, (self.positions[i][0], SCREEN_HEIGHT - GRID_SIZE)
+                )
+                self.positions.pop(i + 1)
 
     def reset(self):
         """Метод сброса игры."""
@@ -175,14 +180,14 @@ def main():
         snake.update_direction()
         snake.move()
         snake.draw(screen)
-        
+
         if snake.positions[0] == apple.position:
             apple.position = apple.randomize_position
             while apple.position in snake.positions:
                 apple.position = apple.randomize_position
         else:
             snake.positions.pop(-1)
-        
+
         snake.reset()
         apple.draw(screen)
 
