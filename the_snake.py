@@ -29,10 +29,11 @@ SNAKE_COLOR = (0, 255, 0)
 
 START_LENGTH_SNAKE = 1
 
-SPEED = 20
+START_SPEED = 3
+SPEED_RATE = 1.5
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
-pygame.display.set_caption('Змейка')
+set_cap_1 = pygame.display.set_caption('Змейка')
 screen.fill(BOARD_BACKGROUND_COLOR)
 clock = pygame.time.Clock()
 
@@ -45,6 +46,31 @@ def handle_keys(game_object):
             raise SystemExit
         elif event.type == pygame.KEYDOWN:
             game_object.next_direction = EVENT_KEYS[event.key]
+
+
+def save_result(result):
+    """Функция сохранения результата игры."""
+    if result not in read_result():
+        with open('results.txt', 'a', encoding='utf-8') as f:
+            f.write(str(result) + '\n')
+
+
+def read_result():
+    """Функция чтения результатов игры."""
+    with open('results.txt', 'r', encoding='utf-8') as f:
+        results = []
+        for i in f.readlines():
+            num = int(i.rstrip('\n'))
+            results.append(num)
+        return results
+
+
+def best_result():
+    """Функция возвращает лучший результат."""
+    if read_result():
+        return max(read_result())
+    else:
+        return 0
 
 
 class GameObject:
@@ -168,35 +194,48 @@ class Snake(GameObject):
                 )
                 self.positions.remove(position)
 
-    def reset(self):
+    def reset(self, score):
         """Метод сброса игры."""
         if len(self.positions) != len(set(self.positions)):
+            save_result(score)
             screen.fill(BOARD_BACKGROUND_COLOR)
             main()
 
 
 def main():
     """Главная функция."""
+    speed = START_SPEED
+    score = START_LENGTH_SNAKE
+    best_score = best_result()
     apple = Apple()
     apple.draw()
     snake = Snake()
     snake.draw()
 
     while True:
-        clock.tick(SPEED)
+        clock.tick(speed)
 
         handle_keys(snake)
         snake.update_direction()
         snake.move()
         snake.draw()
         if snake.positions[0] == apple.position:
+            score += 1
             apple.position = apple.randomize_position
             while apple.position in snake.positions:
                 apple.position = apple.randomize_position
         else:
             snake.positions.pop(-1)
-        snake.reset()
+        if len(snake.positions) > round(speed * SPEED_RATE):
+            speed += 1
+        snake.reset(score)
         apple.draw()
+        pygame.display.set_caption(
+            'Змейка  '
+            f'Длинна змейки: {score}  '
+            f'Рекордная длинна змейки: {best_score}  '
+            f'Скорость змейки: {speed}'
+        )
 
         pygame.display.update()
 
