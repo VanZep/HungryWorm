@@ -1,7 +1,7 @@
-# the_snake
+# HungryWorm
 
 ## Описание
-Игра - "Змейка"
+Игра - "HungryWorm"
 
 ### Технологии
 Python 3.9.13, pygame 2.5.2
@@ -10,11 +10,11 @@ Python 3.9.13, pygame 2.5.2
 1. Склонируйте проект к себе на компьютер:
 + *Для этого из нужной директории в командной строке выполните команду*
 ```
-git clone git@github.com:VanZep/the_snake.git
+git clone git@github.com:VanZep/HungryWorm.git
 ```
 2. Перейдите в каталог проекта:
 ```
-cd the_snake
+cd HungryWorm
 ```
 3. Создайте виртуальное окружение:
 + *для Windows*
