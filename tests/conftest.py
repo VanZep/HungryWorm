@@ -26,7 +26,7 @@ TIMEOUT_ASSERT_MSG = (
 
 
 def import_the_snake():
-    import the_snake  # noqa
+    import hungryworm  # noqa
 
 
 @pytest.fixture(scope='session')
@@ -43,17 +43,17 @@ def snake_import_test():
 @pytest.fixture(scope='session')
 def _the_snake(snake_import_test):
     try:
-        import the_snake
+        import hungryworm
     except ImportError as error:
         raise AssertionError(
-            'При импорте модуль `the_snake` произошла ошибка:\n'
+            'При импорте модуль `hungryworm` произошла ошибка:\n'
             f'{type(error).__name__}: {error}'
         )
     for class_name in ('GameObject', 'Snake', 'Apple'):
-        assert hasattr(the_snake, class_name), (
-            f'Убедитесь, что в модуле `the_snake` определен класс `{class_name}`.'
+        assert hasattr(hungryworm, class_name), (
+            f'Убедитесь, что в модуле `hungryworm` определен класс `{class_name}`.'
         )
-    return the_snake
+    return hungryworm
 
 
 def write_timeout_reasons(text, stream=None):
