@@ -33,7 +33,7 @@ START_SPEED = 3
 SPEED_RATE = 1.5
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
-set_cap_1 = pygame.display.set_caption('Змейка')
+set_cap_1 = pygame.display.set_caption('Голодный червячок')
 screen.fill(BOARD_BACKGROUND_COLOR)
 clock = pygame.time.Clock()
 
@@ -69,8 +69,7 @@ def best_result():
     """Функция возвращает лучший результат."""
     if read_result():
         return max(read_result())
-    else:
-        return 0
+    return 0
 
 
 class GameObject:
@@ -231,10 +230,10 @@ def main():
         snake.reset(score)
         apple.draw()
         pygame.display.set_caption(
-            'Змейка  '
-            f'Длинна змейки: {score}  '
-            f'Рекордная длинна змейки: {best_score}  '
-            f'Скорость змейки: {speed}'
+            'Голодный червячок | '
+            f'Текущая длинна: {score} | '
+            f'Текущая скорость: {speed} | '
+            f'Рекордная длинна: {best_score}'
         )
 
         pygame.display.update()

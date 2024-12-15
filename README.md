@@ -40,7 +40,7 @@ pip install -r requirements.txt
 ```
 6. Для запуска игры выполните команду:
 ```
-python the_snake.py
+python hungryworm.py
 ```
 
 ### Управление
